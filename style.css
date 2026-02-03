@@ -1,0 +1,287 @@
+/* Import nowoczesnej czcionki */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Zdefiniowane kolory jako zmienne */
+:root {
+    --primary: #6366f1;
+    --secondary: #1e1e2f;
+    --text: #2d3436;
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --sidebar-text: #a0a0a0;
+}
+
+/* Kolory dla trybu ciemnego */
+body.dark-mode {
+    --text: #f0f2f5;
+    --bg: #121212;
+    --card-bg: #1e1e2f;
+    --sidebar-text: #e0e0e0;
+}
+
+/* Aktualizacja istniejących styli, by używały zmiennych */
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s; /* Płynne przejście kolorów */
+}
+
+.card {
+    background: var(--card-bg);
+    color: var(--text);
+}
+
+/* Przycisk zmiany motywu */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    background: var(--card-bg);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Mała poprawka dla komórek gry w trybie ciemnym */
+body.dark-mode .cell {
+    background: #2d2d44;
+    color: white;
+    border: 1px solid #444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/*SIDEBAR*/
+.sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--secondary);
+    color: white;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    padding: 40px 20px;
+    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--primary);
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.sidebar ul { list-style: none; }
+
+.sidebar li { margin: 15px 0; }
+
+.sidebar button {
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: #a0a0a0;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar button:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding-left: 30px;
+}
+
+/*PRZYCISKI I UI*/
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 998;
+}
+
+#overlay.active { display: block; }
+
+/*SEKCJE APLIKACJI*/
+.app-section {
+    display: none; 
+    padding: 100px 20px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+}
+
+.app-section.active {
+    display: block; /*Tylko aktywna widoczna*/
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/*KÓŁKO I KRZYŻYK*/
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+    max-width: 330px;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: #f8f9fa;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    color: var(--secondary);
+}
+
+.cell:hover { background: #eef1f4; }
+.cell.taken { cursor: default; }
+
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+/* Style dla planu projektu na stronie startowej */
+.plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.plan-table th, .plan-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.plan-table th {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+body.dark-mode .plan-table td {
+    border-bottom: 1px solid #444;
+}
+
+.project-plan h3 {
+    margin-top: 15px;
+}
+/* Responsywność dla mapy */
+@media (max-width: 768px) {
+    .map-container {
+        height: 400px !important;
+    }
+}
+.app-section {
+    display: none; /* Domyślnie wszystko ukryte */
+}
+
+.app-section.active {
+    display: block !important; /* Pokazuje tylko sekcję z klasą active */
+}
+/* Styl dla tła Elden Ring z rozszerzeniem .jpg */
+body.elden-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('elden_ring.jpg') no-repeat center center fixed;
+    background-size: cover;
+    transition: background 0.4s ease-in-out;
+}
+
+/* Blur nakładany na tło */
+body.elden-bg::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    backdrop-filter: blur(5px); /* Możesz zwiększyć do 10px dla mocniejszego efektu */
+    -webkit-backdrop-filter: blur(5px); /* Wsparcie dla Safari */
+    z-index: -1;
+}
+/* Styl dla tła z GIFem Hollow Knight */
+body.hollow-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                url('hollow-knight-dance.gif') no-repeat center center fixed !important;
+    background-size: cover !important;
+}
+
+/* Opcjonalnie: brak blura dla GIF-a, żeby był wyraźny, 
+   ale jeśli chcesz go rozmyć, dodaj to: */
+body.hollow-bg::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    backdrop-filter: blur(2px); /* Delikatny blur dla lepszej czytelności tekstu */
+    z-index: -1;
+}

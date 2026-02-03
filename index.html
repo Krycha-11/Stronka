@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt - Krystian Pokora</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Dodatkowe style dla poprawnego działania sekcji */
+        .app-section {
+            display: none;
+        }
+        .app-section.active {
+            display: block !important;
+        }
+        #presentation ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        #presentation li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <div id="overlay" onclick="toggleMenu()"></div>
+
+    <nav id="sidebar" class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li><button onclick="showSection('home')">🏠 Start</button></li>
+            <li><button onclick="showSection('shopping')">🛒 Lista Zakupów</button></li>
+            <li><button onclick="showSection('game')">🎮 Kółko i Krzyżyk</button></li>
+            <li><button onclick="showSection('quotes')">📖 Generator Cytatów</button></li>
+            <li><button onclick="showSection('map')">🗺️ Mapa Elden Ring</button></li>
+            <li><button onclick="showSection('hollow')">⚔️ Hollow Knight</button></li>
+            <li><button onclick="showSection('presentation')">🎴 Prezentacja</button></li>
+            
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="app-section active">
+            <h1>Projekt: Multi-Tool Dashboard</h1>
+            <p style="margin-bottom: 20px;">Siema! Poniżej są cele i harmonogram mojego projektu.</p>
+            <div class="project-plan">
+                <h3 style="color: var(--primary);">🎯 Cele Projektu</h3>
+                <ul style="margin: 10px 0 20px 20px; line-height: 1.8;">
+                    <li><strong>Techniczny:</strong> Budowa responsywnego interfejsu typu Dashboard z bocznym menu.</li>
+                    <li><strong>Funkcjonalny:</strong> Stworzenie systemu zapisu danych użytkownika w pamięci lokalnej (Local Storage).</li>
+                    <li><strong>Rozrywkowy:</strong> Integracja interaktywnych map gier oraz implementacja gry z AI.</li>
+                    <li><strong>Estetyczny:</strong> Wdrożenie płynnego systemu zmiany motywów (Dark/Light Mode).</li>
+                </ul>
+                <h3 style="color: var(--primary);">📅 Harmonogram pracy</h3>
+                <table class="plan-table">
+                    <thead>
+                        <tr>
+                            <th>Faza Projektu</th>
+                            <th>Zadania</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Analiza oraz Design</td><td>Wybór tematu, zaprojektowanie układu Sidebar oraz dobór palety barw.</td></tr>
+                        <tr><td>2. Szkielet i Wygląd</td><td>Kodowanie struktury HTML oraz stylowanie CSS.</td></tr>
+                        <tr><td>3. Logika i Funkcje</td><td>Dodanie funkcji listy zakupów i algorytmu gry.</td></tr>
+                        <tr><td>4. Testy</td><td>Optymalizacja responsywności i poprawa błędów.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="shopping" class="app-section">
+            <div class="card">
+                <h2>Lista Zakupów</h2>
+                <div style="display: flex; gap: 10px; margin: 20px 0;">
+                    <input type="text" id="itemInput" placeholder="Np. Mleko..." style="flex:1; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                    <button onclick="addItem()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Dodaj</button>
+                </div>
+                <ul id="shoppingList" style="list-style:none;"></ul>
+                <footer>Wykonawca: Krystian Pokora</footer>
+            </div>
+        </section>
+
+        <section id="game" class="app-section">
+            <div class="card">
+                <h2>Gra z Komputerem</h2>
+                <p id="status">Twoja tura (X)</p>
+                <div class="board">
+                    <div class="cell" onclick="playerMove(this, 0)"></div>
+                    <div class="cell" onclick="playerMove(this, 1)"></div>
+                    <div class="cell" onclick="playerMove(this, 2)"></div>
+                    <div class="cell" onclick="playerMove(this, 3)"></div>
+                    <div class="cell" onclick="playerMove(this, 4)"></div>
+                    <div class="cell" onclick="playerMove(this, 5)"></div>
+                    <div class="cell" onclick="playerMove(this, 6)"></div>
+                    <div class="cell" onclick="playerMove(this, 7)"></div>
+                    <div class="cell" onclick="playerMove(this, 8)"></div>
+                </div>
+                <button onclick="resetGame()" style="width:100%; padding:12px; background:#f1f2f6; border:none; border-radius:8px; cursor:pointer; margin-top:10px;">Resetuj Grę</button>
+                <footer>Wykonawca: Krystian Pokora</footer>
+            </div>
+        </section>
+
+        <section id="quotes" class="app-section">
+            <div class="card">
+                <h2>Losowy Cytat</h2>
+                <div id="quote-container" style="margin: 20px 0; min-height: 150px; border-left: 4px solid var(--primary); padding-left: 20px;">
+                    <p id="quote-text" style="font-style: italic; font-size: 1.2rem;">"Kliknij przycisk..."</p>
+                    <p style="margin-top: 10px;"><strong>Postać:</strong> <span id="quote-char">-</span></p>
+                    <p><strong>Książka:</strong> <span id="quote-book">-</span></p>
+                    <p><strong>Strona:</strong> <span id="quote-page">-</span></p>
+                    <p><strong>Autor:</strong> <span id="quote-author">-</span></p>
+                </div>
+                <button onclick="generateQuote()" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;">Losuj nowy cytat</button>
+                <footer>Wykonawca: Krystian Pokora</footer>
+            </div>
+        </section>
+
+        <section id="map" class="app-section">
+            <div class="card" style="max-width: 1000px;">
+                <h2>Interaktywna Mapa Elden Ring</h2>
+                <div class="map-container" style="margin: 20px 0; border-radius: 12px; overflow: hidden; height: 600px; border: 2px solid var(--primary);">
+                    <iframe src="https://mapgenie.io/elden-ring/maps/the-lands-between?embed=light" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+                <footer>Wykonawca: Krystian Pokora</footer>
+            </div>
+        </section>
+
+<section id="presentation" class="app-section">
+    <div class="card">
+        <h1 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;"> Prezentacja Projektu</h1>
+        
+        <div style="text-align: left; line-height: 1.6;">
+            
+            <h3 style="color: var(--primary);">1. Temat i Planowanie</h3>
+            <ul>
+                <li><strong>Temat:</strong> Multi-Tool Dashboard – zintegrowane centrum narzędzi dla gracza.</li>
+                <li><strong>Plan:</strong> Projekt został podzielony na fazy (Analiza -> Szkielet -> Logika -> Testy), co pozwoliło na płynne dodawanie nowych funkcji, jak dynamiczne tła.</li>
+            </ul>
+
+            <h3 style="color: var(--primary);">2. Struktura i Stylizacja</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Użycie semantycznych tagów (nav, main, section) dla lepszej struktury.</li>
+                <li><strong>CSS3:</strong> Wykorzystanie zmiennych (:root) do łatwego zarządzania kolorami oraz systemu <strong>Dark Mode</strong>.</li>
+            </ul>
+
+            <h3 style="color: var(--primary);">3. Responsywność (RWD)</h3>
+            <ul>
+                <li>Zastosowanie <strong>Media Queries</strong> oraz Flexboxa sprawia, że dashboard jest czytelny zarówno na komputerze, jak i na smartfonie (np. zmniejszająca się mapa Elden Ring).</li>
+            </ul>
+
+            <h3 style="color: var(--primary);">4. Interakcja z JS</h3>
+            <ul>
+                <li><strong>DOM:</strong> Dynamiczne przełączanie sekcji bez odświeżania strony.</li>
+                <li><strong>LocalStorage:</strong> Trwałe zapisywanie listy zakupów oraz wybranego motywu kolorystycznego.</li>
+                <li><strong>Logika:</strong> Algorytm losowania cytatów oraz gra "Kółko i Krzyżyk" z prostym AI.</li>
+            </ul>
+
+            <h3 style="color: var(--primary);">5. Wyzwania i Doświadczenia</h3>
+            <blockquote style="background: rgba(99, 102, 241, 0.1); padding: 15px; border-left: 5px solid var(--primary); margin: 10px 0; border-radius: 0 10px 10px 0;">
+                "Największym wyzwaniem była synchronizacja mapy interaktywnej Elden Ring z nawigacją oraz zapewnienie, że LocalStorage poprawnie wczytuje dane przy starcie strony. Nauczyłem się, jak ważne jest czyste zamykanie tagów HTML przy tak dużej strukturze."
+            </blockquote>
+
+            <h3 style="color: var(--primary);">6. Kontynuacja Rozwoju</h3>
+            <p>W przyszłości planuję dodać:</p>
+            <ul>
+                <li>Zewnętrzne API pogodowe.</li>
+                <li>Większą bibliotekę map z innych gier RPG np. do Wiedźmina 3 lub do Hollow Knight</li>
+            </ul>
+        </div>
+
+        <footer style="margin-top: 30px;">Wykonawca: Krystian Pokora</footer>
+    </div>
+</section>
+
+<section id="hollow" class="app-section">
+    <div class="card" style="max-width: 1000px; background: rgba(30, 30, 47, 0.85); color: white; backdrop-filter: blur(5px);">
+        <h2>Interaktywna Mapa Hollow Knight</h2>
+        <p>Eksploruj ruiny Hallownest.</p>
+        
+        <div class="map-container" style="margin: 20px 0; border-radius: 12px; overflow: hidden; height: 600px; border: 2px solid #33d9b2;">
+            <iframe 
+                src="https://mapgenie.io/hollow-knight/maps/hallownest?embed=light" 
+                width="100%" 
+                height="100%" 
+                frameborder="0">
+            </iframe>
+        </div>
+        
+        <footer>Wykonawca: Krystian Pokora</footer>
+    </div>
+</section>    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+    // 1. MOTYW (DARK MODE)
+    function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.getElementById('themeBtn').textContent = isDark ? "☀️" : "🌙";
+    }
+
+    // 2. NAWIGACJA I SEKCJE
+    function toggleMenu() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.app-section');
+        const body = document.body;
+
+        // Ukrywamy sekcje
+        sections.forEach(sec => {
+            sec.classList.remove('active');
+            sec.style.display = "none";
+        });
+
+        // Dynamiczne tła
+        body.classList.remove('elden-bg', 'quotes-bg', 'hollow-bg');
+
+        if (sectionId === 'map') {
+            body.classList.add('elden-bg');
+        } else if (sectionId === 'quotes') {
+            body.classList.add('quotes-bg');
+        } else if (sectionId === 'hollow') {
+            body.classList.add('hollow-bg');
+        }
+
+        // Pokazujemy wybraną sekcję
+        const target = document.getElementById(sectionId);
+        if(target) {
+            target.classList.add('active');
+            target.style.display = "block";
+        }
+
+        // Zamykamy menu po kliknięciu
+        if (document.getElementById('sidebar').classList.contains('open')) {
+            toggleMenu();
+        }
+    }
+
+    // 3. LISTA ZAKUPÓW
+    function addItem(text = null) {
+        const input = document.getElementById('itemInput');
+        const value = text || input.value;
+        if (value.trim() === "") return;
+        const li = document.createElement('li');
+        li.style.cssText = "display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;";
+        li.innerHTML = `${value} <span onclick="this.parentElement.remove(); saveShoppingList();" style="cursor:pointer; color:red;">❌</span>`;
+        document.getElementById('shoppingList').appendChild(li);
+        if (!text) input.value = "";
+        saveShoppingList();
+    }
+
+    function saveShoppingList() {
+        const items = [];
+        document.querySelectorAll('#shoppingList li').forEach(li => items.push(li.firstChild.textContent.trim()));
+        localStorage.setItem('shoppingList', JSON.stringify(items));
+    }
+
+    // 4. KÓŁKO I KRZYŻYK
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let active = true;
+    function playerMove(el, idx) {
+        if (board[idx] !== "" || !active) return;
+        makeMove(idx, 'X');
+        if (active) setTimeout(computerMove, 500);
+    }
+    function computerMove() {
+        let free = board.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+        if (free.length > 0) makeMove(free[Math.floor(Math.random()*free.length)], 'O');
+    }
+    function makeMove(idx, p) {
+        board[idx] = p;
+        document.querySelectorAll('.cell')[idx].textContent = p;
+        if (checkWin()) {
+            document.getElementById('status').textContent = p === 'X' ? "Wygrałeś!" : "Przegrałeś!";
+            active = false;
+        } else if (!board.includes("")) {
+            document.getElementById('status').textContent = "Remis!";
+            active = false;
+        }
+    }
+    function checkWin() {
+        const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        return wins.some(w => board[w[0]] && board[w[0]]===board[w[1]] && board[w[0]]===board[w[2]]);
+    }
+    function resetGame() {
+        board = ["", "", "", "", "", "", "", "", ""];
+        active = true;
+        document.querySelectorAll('.cell').forEach(c => c.textContent = "");
+        document.getElementById('status').textContent = "Twoja tura (X)";
+    }
+
+    // 5. CYTATY
+    const quotes = [
+    {
+        text: "Nie kocha się za nic, a pomimo wszystko.",
+        character: "Narrator",
+        book: "W imię miłości",
+        page: "42",
+        author: "Jan Twardowski"
+    },
+    {
+        text: "Dobrze widzi się tylko sercem. Najważniejsze jest niewidoczne dla oczu.",
+        character: "Lis",
+        book: "Mały Książę",
+        page: "67",
+        author: "Antoine de Saint-Exupéry"
+    },
+    {
+        text: "Wszyscy dorośli byli kiedyś dziećmi, ale niewielu z nich o tym pamięta.",
+        character: "Autor",
+        book: "Mały Książę",
+        page: "5",
+        author: "Antoine de Saint-Exupéry"
+    },
+    {
+        text: "Nie warto pogrążać się w marzeniach i zapominać o życiu",
+        character: "Albus Dumbledore",
+        book: "Harry Potter i Kamień Filozoficzny.",
+        page: "ok. 224",
+        author: "J.K. Rowling."
+    },
+    {
+        text: "Zło to zło... Mniejsze, większe, średnie, wszystko jedno, proporcje są umowne a granice zatarte. (...) Jeżeli mam wybierać pomiędzy jednym złem a drugim, wolę nie wybierać wcale",
+        character: "Geralt z Rivii",
+        book: "Ostatnie życzenie",
+        page: "ok.102",
+        author: "Andrzej Sapkowski"
+    }
+];
+
+    function generateQuote() {
+        const q = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById('quote-text').textContent = `"${q.text}"`;
+        document.getElementById('quote-char').textContent = q.character;
+        document.getElementById('quote-book').textContent = q.book;
+        document.getElementById('quote-page').textContent = q.page;
+        document.getElementById('quote-author').textContent = q.author;
+    }
+
+    // 6. START (Ładowanie danych z pamięci)
+    window.onload = function() {
+        // Przywracanie motywu
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeBtn').textContent = "☀️";
+        }
+        // Przywracanie listy zakupów
+        const savedList = JSON.parse(localStorage.getItem('shoppingList'));
+        if (savedList) savedList.forEach(item => addItem(item));
+    };
+</script>
+</body>
+</html>
