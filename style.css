@@ -1,66 +1,9 @@
-/* Import nowoczesnej czcionki */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-/* Zdefiniowane kolory jako zmienne */
 :root {
-    --primary: #6366f1;
-    --secondary: #1e1e2f;
-    --text: #2d3436;
-    --bg: #f0f2f5;
-    --card-bg: #ffffff;
-    --sidebar-text: #a0a0a0;
-}
-
-/* Kolory dla trybu ciemnego */
-body.dark-mode {
-    --text: #f0f2f5;
-    --bg: #121212;
-    --card-bg: #1e1e2f;
-    --sidebar-text: #e0e0e0;
-}
-
-/* Aktualizacja istniejących styli, by używały zmiennych */
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background 0.3s, color 0.3s; /* Płynne przejście kolorów */
-}
-
-.card {
-    background: var(--card-bg);
-    color: var(--text);
-}
-
-/* Przycisk zmiany motywu */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 999;
-    background: var(--card-bg);
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-}
-
-/* Mała poprawka dla komórek gry w trybie ciemnym */
-body.dark-mode .cell {
-    background: #2d2d44;
-    color: white;
-    border: 1px solid #444;
+    --text: rgb(211, 210, 208);
+    --bg: rgb(10, 10, 10);
+    --primary-purple: rgb(87, 27, 87);
+    --glow-purple: rgba(87, 27, 87, 0.6);
+    --transition: 0.4s cubic-bezier(0.2, 0.9, 0.35, 1.3);
 }
 
 * {
@@ -73,215 +16,221 @@ body.dark-mode .cell {
 body {
     background-color: var(--bg);
     color: var(--text);
+    transition: all 0.5s ease;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
-/*SIDEBAR*/
+.home-theme {
+    background: linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a0a0a);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.home-header h1 {
+    font-size: 3rem;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+.header-line {
+    width: 100px;
+    height: 4px;
+    background: var(--primary-purple);
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 0 15px var(--primary-purple);
+}
+
+.launcher-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.launcher-card {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.launcher-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 30px var(--glow-purple);
+}
+
+.card-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: 0.5s;
+}
+
+.launcher-card:hover .card-image {
+    filter: brightness(1.2);
+}
+
+.card-content {
+    padding: 25px;
+    text-align: center;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.card-content p {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.elden-img { background-image: url('elden_ring.jpg'); }
+.hollow-img { background-image: url('hollow-knight-dance.gif'); }
+
+.elden-theme {
+    background-color: rgb(45, 52, 64);
+}
+
+.elden-theme .header-line { background: goldenrod; box-shadow: 0 0 15px goldenrod; }
+
+.hollow-theme {
+    background-color: rgb(67, 65, 70);
+}
+
+.hollow-theme .header-line { background: rgb(211, 210, 208); box-shadow: 0 0 15px white; }
+
 .sidebar {
     position: fixed;
-    left: -280px;
+    left: -300px;
     top: 0;
-    width: 280px;
+    width: 300px;
     height: 100%;
-    background: var(--secondary);
-    color: white;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1000;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    z-index: 2000;
     padding: 40px 20px;
-    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(255,255,255,0.1);
 }
 
-.sidebar.open {
-    left: 0;
-}
-
-.sidebar h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    color: var(--primary);
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
-}
-
-.sidebar ul { list-style: none; }
-
-.sidebar li { margin: 15px 0; }
+.sidebar.open { left: 0; }
 
 .sidebar button {
     width: 100%;
-    padding: 12px 20px;
+    padding: 15px;
     background: transparent;
     border: none;
-    color: #a0a0a0;
+    color: #eee;
     text-align: left;
-    font-size: 1rem;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 10px;
+    margin-bottom: 10px;
     transition: 0.3s;
 }
 
 .sidebar button:hover {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    padding-left: 30px;
+    background: var(--primary-purple);
+    padding-left: 25px;
 }
 
-/*PRZYCISKI I UI*/
-.menu-toggle {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 999;
-    background: var(--primary);
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-}
-
-#overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-    z-index: 998;
-}
-
-#overlay.active { display: block; }
-
-/*SEKCJE APLIKACJI*/
 .app-section {
-    display: none; 
-    padding: 100px 20px 40px;
-    max-width: 800px;
-    margin: 0 auto;
-    animation: fadeIn 0.5s ease;
+    display: none;
+    padding: 100px 20px;
+    animation: fadeIn 0.8s ease;
 }
 
-.app-section.active {
-    display: block; /*Tylko aktywna widoczna*/
-}
+.app-section.active { display: block !important; }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .card {
-    background: var(--white);
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 30px;
+    background: rgba(0,0,0,0.4);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/*KÓŁKO I KRZYŻYK*/
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 20px 0;
-    max-width: 330px;
+.map {
+    height: 650px;
+    margin-top: 25px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.cell {
-    aspect-ratio: 1;
-    background: #f8f9fa;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 600;
+.menu-toggle {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    z-index: 1000;
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
     cursor: pointer;
-    transition: 0.2s;
-    color: var(--secondary);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: 0.3s;
 }
 
-.cell:hover { background: #eef1f4; }
-.cell.taken { cursor: default; }
-
-footer {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #888;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
-/* Style dla planu projektu na stronie startowej */
-.plan-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+.menu-toggle:hover {
+    transform: rotate(90deg);
 }
 
-.plan-table th, .plan-table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.9rem;
-}
-
-.plan-table th {
-    color: var(--primary);
-    font-weight: 600;
-}
-
-body.dark-mode .plan-table td {
-    border-bottom: 1px solid #444;
-}
-
-.project-plan h3 {
-    margin-top: 15px;
-}
-/* Responsywność dla mapy */
-@media (max-width: 768px) {
-    .map-container {
-        height: 400px !important;
-    }
-}
-.app-section {
-    display: none; /* Domyślnie wszystko ukryte */
-}
-
-.app-section.active {
-    display: block !important; /* Pokazuje tylko sekcję z klasą active */
-}
-/* Styl dla tła Elden Ring z rozszerzeniem .jpg */
 body.elden-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url('elden_ring.jpg') no-repeat center center fixed;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('elden_ring.jpg');
     background-size: cover;
-    transition: background 0.4s ease-in-out;
+    background-attachment: fixed;
 }
 
-/* Blur nakładany na tło */
-body.elden-bg::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    backdrop-filter: blur(5px); /* Możesz zwiększyć do 10px dla mocniejszego efektu */
-    -webkit-backdrop-filter: blur(5px); /* Wsparcie dla Safari */
-    z-index: -1;
-}
-/* Styl dla tła z GIFem Hollow Knight */
 body.hollow-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                url('hollow-knight-dance.gif') no-repeat center center fixed !important;
-    background-size: cover !important;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hollow-knight-dance.gif');
+    background-size: cover;
+    background-attachment: fixed;
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 1500;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-/* Opcjonalnie: brak blura dla GIF-a, żeby był wyraźny, 
-   ale jeśli chcesz go rozmyć, dodaj to: */
-body.hollow-bg::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    backdrop-filter: blur(2px); /* Delikatny blur dla lepszej czytelności tekstu */
-    z-index: -1;
+#overlay.active {
+    display: block;
+    opacity: 1;
 }
