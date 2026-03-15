@@ -6,7 +6,6 @@
     <title>Projekt - Krystian Pokora</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Dodatkowe style dla poprawnego działania sekcji */
         .app-section {
             display: none;
         }
@@ -207,7 +206,6 @@
 
 
     <script>
-    // 1. MOTYW (DARK MODE)
     function toggleTheme() {
         const body = document.body;
         body.classList.toggle('dark-mode');
@@ -216,7 +214,6 @@
         document.getElementById('themeBtn').textContent = isDark ? "☀️" : "🌙";
     }
 
-    // 2. NAWIGACJA I SEKCJE
     function toggleMenu() {
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('overlay').classList.toggle('active');
