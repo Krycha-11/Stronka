@@ -15,6 +15,7 @@
         <h2>Menu Powrotne</h2>
         <ul>
             <li><button onclick="showSection('home')">Home</button></li>
+            <li><button onclick="showSection('ListaZakup')">ListaZakupów</button></li>
             <li><button onclick="showSection('Elden')">Mapa Elden Ring</button></li>
             <li><button onclick="showSection('Hollow')">Mapa Hollow Knight</button></li>
         </ul>
@@ -23,7 +24,7 @@
     <main>
         <section id="home" class="app-section active">
             <div class="home-header">
-                <h1>Menu</h1>
+                <h1>𝓜𝓮𝓷𝓾</h1>
                 <div class="header-line"></div>
             </div>
             
@@ -35,6 +36,13 @@
                         <p>Interaktywna Mapa Elden Ring</p>
                     </div>
                 </div>
+                <section class="launcher-card" onclick="showSection('ListaZakup')">
+                    <section class="card-image ListaZakup-img"></section>
+                    <section class="card-content">
+                        <h3>Lista Zakupów</h3>
+                        <p>Zapisz se co tam trzeba</p>
+                    </section>
+                </section>
                 <div class="launcher-card" onclick="showSection('Hollow')">
                     <div class="card-image hollow-img"></div>
                     <div class="card-content">
@@ -45,6 +53,8 @@
             </div>
         </section>
 
+
+
         <section id="Elden" class="app-section">
             <section class="card" id="E-card">
                 <h2 id="E-h2">Mapa Elden ring</h2>
@@ -54,6 +64,22 @@
             </section>
         </section>
 
+
+        <section id="ListaZakup" class="app-section">
+            <section class="card" id="Z-card">
+                <section class="shopping-list-container">
+                    <h2>Lista Zakupów</h2>
+                    <section class="input-group">
+                        <input type="text" id="itemInput" placeholder="Dodaj przedmiot...">
+                        <button onclick="addItem()">Dodaj</button>
+                    </section>
+                    <ul id="shoppingList"></ul>
+                    <button class="clear-btn" onclick="clearList()">Wyczyść listę</button>
+                </section>
+            </section>
+        </section>
+
+        
         <section id="Hollow" class="app-section">
             <section class="card" id="H-card">
                 <h2 id="H-h2">Mapa Hollow Knight</h2>
@@ -62,6 +88,7 @@
                 </section>
             </section>
         </section>
+
     </main>
 
 <script>
@@ -99,6 +126,78 @@
             toggleMenu();
         }
     }
+    document.addEventListener('DOMContentLoaded', loadList);
+
+    function addItem() {
+        const input = document.getElementById('itemInput');
+        const text = input.value.trim();
+
+        if (text !== "") {
+            const item = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+            saveItem(item);
+            renderItem(item);
+            input.value = "";
+        }
+    }
+
+    function renderItem(item) {
+        const ul = document.getElementById('shoppingList');
+        const li = document.createElement('li');
+        li.setAttribute('data-id', item.id);
+        if (item.completed) li.classList.add('completed');
+
+        li.innerHTML = `
+            <span onclick="toggleComplete(${item.id})">${item.text}</span>
+            <span class="delete-item" onclick="deleteItem(${item.id})">✕</span>
+        `;
+        ul.appendChild(li);
+    }
+
+    function toggleComplete(id) {
+        let items = JSON.parse(localStorage.getItem('shoppingItems')) || [];
+        items = items.map(item => {
+            if (item.id === id) item.completed = !item.completed;
+            return item;
+        });
+        localStorage.setItem('shoppingItems', JSON.stringify(items));
+        refreshUI();
+    }
+
+    function deleteItem(id) {
+        let items = JSON.parse(localStorage.getItem('shoppingItems')) || [];
+        items = items.filter(item => item.id !== id);
+        localStorage.setItem('shoppingItems', JSON.stringify(items));
+        refreshUI();
+    }
+
+    function saveItem(item) {
+        const items = JSON.parse(localStorage.getItem('shoppingItems')) || [];
+        items.push(item);
+        localStorage.setItem('shoppingItems', JSON.stringify(items));
+    }
+
+    function loadList() {
+        const items = JSON.parse(localStorage.getItem('shoppingItems')) || [];
+        items.forEach(renderItem);
+    }
+
+    function refreshUI() {
+        document.getElementById('shoppingList').innerHTML = "";
+        loadList();
+    }
+
+    function clearList() {
+        localStorage.removeItem('shoppingItems');
+        refreshUI();
+    }
+
+    document.getElementById('itemInput')?.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') addItem();
+    });
 </script>
 </body>
 </html>
