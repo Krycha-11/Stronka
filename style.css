@@ -109,6 +109,7 @@ body {
 
 .elden-img { background-image: url('elden_ring.jpg'); }
 .hollow-img { background-image: url('hollow-knight-dance.gif'); }
+.ListaZakup-img{background-image: url('BNL.PNG');}
 
 .elden-theme {
     background-color: rgb(45, 52, 64);
@@ -233,4 +234,108 @@ body.hollow-bg {
 #overlay.active {
     display: block;
     opacity: 1;
+}
+#P-text{
+    background-color: var(--primary-purple);
+}
+.shopping-list-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.shopping-list-container h2 {
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#itemInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: white;
+    outline: none;
+}
+
+#itemInput:focus {
+    border-color: var(--primary-purple);
+}
+
+.input-group button {
+    padding: 10px 20px;
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.input-group button:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 10px var(--glow-purple);
+}
+
+#shoppingList {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#shoppingList li {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#shoppingList li.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+#shoppingList li:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.delete-item {
+    color: #ff4444;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.clear-btn {
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.clear-btn:hover {
+    border-color: #ff4444;
+    color: #ff4444;
 }
